@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
+import org.projectzion.game.mmoconnector.persistence.Character;
+import org.projectzion.game.mmoconnector.persistence.security.User;
 
 @Getter
 @Setter
@@ -14,13 +16,18 @@ public class TargetSystem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+
     String name;
+
     String ip;
-    String user;
-    String password;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    User user;
+
     String token;
     //TODO API KEY
 
     @OneToMany(mappedBy = "targetSystem")
-    Set<java.lang.Character> character;
+    Set<Character> character;
 }

@@ -2,11 +2,10 @@ package org.projectzion.game.mmoconnector.persistence;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.persitence.entities.security.User;
+import org.projectzion.game.mmoconnector.persistence.security.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -29,11 +28,5 @@ public class Character implements Serializable {
     @JoinColumn(name="inventory_id")
     Inventory inventory;
 
-    @OneToMany(mappedBy = "character")
-    private Set<CollectedNodes> collectedNodes;
-
     boolean enabled;
-
-
-
 }
