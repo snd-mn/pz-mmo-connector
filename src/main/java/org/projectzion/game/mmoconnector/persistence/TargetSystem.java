@@ -5,7 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
-import org.projectzion.game.mmoconnector.persistence.Character;
+
+import org.projectzion.game.mmoconnector.persistence.rewards.TargetSystemCall;
 import org.projectzion.game.mmoconnector.persistence.security.User;
 
 @Getter
@@ -30,4 +31,7 @@ public class TargetSystem {
 
     @OneToMany(mappedBy = "targetSystem")
     Set<Character> character;
+
+    @OneToMany(mappedBy = "targetSystem")
+    Set<TargetSystemCall> reward;
 }

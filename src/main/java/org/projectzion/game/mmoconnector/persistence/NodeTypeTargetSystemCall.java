@@ -2,16 +2,15 @@ package org.projectzion.game.mmoconnector.persistence;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.mmoconnector.persistence.NodeType;
-import org.projectzion.game.mmoconnector.persistence.rewards.Reward;
+import org.projectzion.game.mmoconnector.persistence.rewards.TargetSystemCall;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity
-@Table(name="node_types_rewards")
-public class NodeTypeReward {
+@Table(name="node_types_target_system_calls")
+public class NodeTypeTargetSystemCall {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,6 +21,6 @@ public class NodeTypeReward {
     NodeType nodeType;
 
     @ManyToOne
-    @JoinColumn(name="reward_id")
-    Reward reward;
+    @JoinColumn(name="target_system_call_id")
+    TargetSystemCall targetSystemCall;
 }

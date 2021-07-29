@@ -2,8 +2,6 @@ package org.projectzion.game.mmoconnector.persistence;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.persitence.entities.conditions.Condition;
-import org.projectzion.game.utils.DisplayResourceType;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -18,12 +16,7 @@ public class NodeType {
     private Long id;
 
     @OneToMany(mappedBy = "nodeType")
-    Set<NodeTypeReward> nodeTypeRewards;
-
-    @OneToMany(mappedBy = "nodeType")
-    Set<OsmMatcherNodeType> osmMatcherNodeTypes;
-
-    private DisplayResourceType displayResourceType;
+    Set<NodeTypeTargetSystemCall> nodeTypeRewards;
 
     private int cooldown;
 
