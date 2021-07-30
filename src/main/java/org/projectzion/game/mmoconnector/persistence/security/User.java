@@ -2,10 +2,12 @@ package org.projectzion.game.mmoconnector.persistence.security;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.projectzion.game.mmoconnector.persistence.Molotow;
 import org.projectzion.game.mmoconnector.persistence.Character;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -38,6 +40,10 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    List<Molotow> calls;
+
 
     public User() {
         super();
