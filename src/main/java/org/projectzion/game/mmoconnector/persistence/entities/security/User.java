@@ -1,9 +1,9 @@
-package org.projectzion.game.mmoconnector.persistence.security;
+package org.projectzion.game.mmoconnector.persistence.entities.security;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.mmoconnector.persistence.Molotov;
-import org.projectzion.game.mmoconnector.persistence.Character;
+import org.projectzion.game.mmoconnector.persistence.entities.rpc.UserCall;
+import org.projectzion.game.mmoconnector.persistence.entities.Character;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -42,7 +42,7 @@ public class User {
     private Collection<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    List<Molotov> molotows;
+    List<UserCall> userCalls;
 
 
     public User() {

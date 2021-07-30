@@ -1,7 +1,15 @@
 package org.projectzion.game.mmoconnector.controllers;
 
-import org.projectzion.game.mmoconnector.tos.SendItems2TrinityRequest;
-import org.projectzion.game.mmoconnector.tos.SendItems2TrinityResponse;
+import org.projectzion.game.mmoconnector.persistence.entities.TargetSystem;
+import org.projectzion.game.mmoconnector.persistence.entities.rpc.Call;
+import org.projectzion.game.mmoconnector.persistence.entities.rpc.CallIdentifier;
+import org.projectzion.game.mmoconnector.persistence.entities.security.User;
+import org.projectzion.game.mmoconnector.persistence.repositories.UserRepository;
+import org.projectzion.game.mmoconnector.services.CallService;
+import org.projectzion.game.mmoconnector.services.TargetSystemService;
+import org.projectzion.game.mmoconnector.services.UserService;
+import org.projectzion.game.mmoconnector.tos.itemtransfer.SendItemsToTargetSystemRequest;
+import org.projectzion.game.mmoconnector.tos.itemtransfer.SendItemsToTargetSystemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
@@ -17,6 +25,15 @@ import java.util.List;
 
 @RestController
 public class TrinityCoreController {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    TargetSystemService targetSystemService;
+
+    @Autowired
+    CallService callService;
 
     protected HttpHeaders getHttpHeaders(){
         HttpHeaders header = new HttpHeaders();
@@ -49,30 +66,44 @@ public class TrinityCoreController {
         return rausMitDerScheisse.replaceAll(placeHolder, command);
     }
 
-    @PostMapping("SendItems2Trinity")
-    public SendItems2TrinityResponse setItems (@RequestBody SendItems2TrinityRequest request){
-        SendItems2TrinityResponse ret = new SendItems2TrinityResponse();
+    @PostMapping("SendItems")
+    public ResponseEntity<String> sendItems (@RequestBody SendItemsToTargetSystemRequest request){
+        ResponseEntity<String> ret;
 
-        StringBuffer commandStr = new StringBuffer();
-        commandStr.append(".send items ");
-        commandStr.append(request.getCharName());
-        commandStr.append(request.getMailSubject());
-        commandStr.append(request.getMailText());
-        request.getItemAmountList().forEach((itemAmount) -> {
-            commandStr.append(itemAmount.getItem());
-            commandStr.append("[:");
-            commandStr.append(itemAmount.getAmount());
-            commandStr.append("] ");
-        });
+        User user = userService.getUserById(request.getUserId());
+        TargetSystem targetSystem = targetSystemService.getTargetSystemById(request.getTargetSystem());
+        Call call = callService.getCallByCallIdentifierAndTargetSystem(CallIdentifier.SEND_ITEMS.value, request.getTargetSystem());
+        //TODO das ist irgendwie zu komplex gebaut, das muss einfacher gehen.
 
-        String body = getCommandPreset(commandStr.toString());
-        HttpEntity entity = new HttpEntity<>(body, getHttpHeaders());
-
-        ResponseEntity<String> response = getRestTemplate().exchange("http://127.0.0.1:7878", HttpMethod.POST, entity, String.class);
-
-        ret.setTcsResponse(response.getBody());
+        ret = new ResponseEntity<String>("digga",HttpStatus.OK);
 
         return ret;
     }
+
+//    @PostMapping("SendItems2Trinity")
+//    public SendItemsToTargetSystemResponse setItems (@RequestBody SendItemsToTargetSystemRequest request){
+//        SendItemsToTargetSystemResponse ret = new SendItemsToTargetSystemResponse();
+//
+//        StringBuffer commandStr = new StringBuffer();
+//        commandStr.append(".send items ");
+//        commandStr.append("TODO_TODO_TODO");
+//        commandStr.append(request.getMailSubject());
+//        commandStr.append(request.getMailText());
+//        request.getItemAmountList().forEach((itemAmount) -> {
+//            commandStr.append(itemAmount.getItem());
+//            commandStr.append("[:");
+//            commandStr.append(itemAmount.getAmount());
+//            commandStr.append("] ");
+//        });
+//
+//        String body = getCommandPreset(commandStr.toString());
+//        HttpEntity entity = new HttpEntity<>(body, getHttpHeaders());
+//
+//        ResponseEntity<String> response = getRestTemplate().exchange("http://127.0.0.1:7878", HttpMethod.POST, entity, String.class);
+//
+//        ret.setTcsResponse(response.getBody());
+//
+//        return ret;
+//    }
 
 }

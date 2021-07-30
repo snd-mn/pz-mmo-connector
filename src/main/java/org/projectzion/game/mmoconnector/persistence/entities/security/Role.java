@@ -1,4 +1,4 @@
-package org.projectzion.game.mmoconnector.persistence.security;
+package org.projectzion.game.mmoconnector.persistence.entities.security;
 
 import lombok.Getter;
 import lombok.Setter;

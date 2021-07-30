@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class BaseInTo {
-    Integer targetSystem;
+    Long userId;
+    Long targetSystem;
 }

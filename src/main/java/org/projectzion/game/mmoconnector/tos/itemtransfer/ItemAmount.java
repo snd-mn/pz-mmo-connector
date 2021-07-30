@@ -1,4 +1,4 @@
-package org.projectzion.game.mmoconnector.tos;
+package org.projectzion.game.mmoconnector.tos.itemtransfer;
 
 import lombok.Data;
 

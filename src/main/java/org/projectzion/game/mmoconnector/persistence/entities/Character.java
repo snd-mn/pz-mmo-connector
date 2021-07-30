@@ -1,8 +1,8 @@
-package org.projectzion.game.mmoconnector.persistence;
+package org.projectzion.game.mmoconnector.persistence.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.mmoconnector.persistence.security.User;
+import org.projectzion.game.mmoconnector.persistence.entities.security.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,16 +17,10 @@ public class Character implements Serializable {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name=" user_id")
+    @JoinColumn(name="user_id")
     User user;
 
     @ManyToOne
-    @JoinColumn(name=" target_system_id")
+    @JoinColumn(name="target_system_id")
     TargetSystem targetSystem;
-
-    @ManyToOne
-    @JoinColumn(name="inventory_id")
-    Molotov inventory;
-
-    boolean enabled;
 }

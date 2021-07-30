@@ -1,4 +1,4 @@
-package org.projectzion.game.mmoconnector.utils;
+package org.projectzion.game.mmoconnector.persistence.entities.rpc;
 
 import java.util.Arrays;
 import java.util.Optional;

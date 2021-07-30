@@ -1,4 +1,4 @@
-package org.projectzion.game.mmoconnector.persistence;
+package org.projectzion.game.mmoconnector.persistence.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,9 +16,6 @@ public class NodeType {
     private Long id;
 
     @OneToMany(mappedBy = "nodeType")
-    Set<NodeTypeTargetSystemCall> nodeTypeTargetSystemCalls;
-
-    private int cooldown;
-
+    Set<NodeTypeCall> nodeTypeTargetSystemCalls;
 
 }
