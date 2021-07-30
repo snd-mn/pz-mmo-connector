@@ -2,7 +2,7 @@ package org.projectzion.game.mmoconnector.persistence.security;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.mmoconnector.persistence.Molotow;
+import org.projectzion.game.mmoconnector.persistence.Molotov;
 import org.projectzion.game.mmoconnector.persistence.Character;
 
 import javax.persistence.*;
@@ -42,7 +42,7 @@ public class User {
     private Collection<Role> roles;
 
     @OneToMany(mappedBy = "user")
-    List<Molotow> calls;
+    List<Molotov> molotows;
 
 
     public User() {

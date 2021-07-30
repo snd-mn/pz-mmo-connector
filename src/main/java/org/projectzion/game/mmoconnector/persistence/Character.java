@@ -26,7 +26,7 @@ public class Character implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="inventory_id")
-    Molotow inventory;
+    Molotov inventory;
 
     boolean enabled;
 }

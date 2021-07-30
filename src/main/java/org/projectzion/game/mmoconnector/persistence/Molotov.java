@@ -8,13 +8,14 @@ import org.projectzion.game.mmoconnector.utils.CallState;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.sql.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name="molotows")
+@Table(name="molotovs")
 //@Brain("https://www.youtube.com/watch?v=n4AUY-v1nsE&list=RDMM&index=14")
-public class Molotow {
+public class Molotov {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -27,4 +28,7 @@ public class Molotow {
 
     CallState state;
 
+    Date created;
+
+    Date finished;
 }

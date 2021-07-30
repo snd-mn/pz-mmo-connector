@@ -16,7 +16,7 @@ public class NodeType {
     private Long id;
 
     @OneToMany(mappedBy = "nodeType")
-    Set<NodeTypeTargetSystemCall> nodeTypeRewards;
+    Set<NodeTypeTargetSystemCall> nodeTypeTargetSystemCalls;
 
     private int cooldown;
 

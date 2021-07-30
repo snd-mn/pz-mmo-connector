@@ -2,7 +2,7 @@ package org.projectzion.game.mmoconnector.persistence.rewards;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.mmoconnector.persistence.Molotow;
+import org.projectzion.game.mmoconnector.persistence.Molotov;
 import org.projectzion.game.mmoconnector.persistence.NodeTypeTargetSystemCall;
 import org.projectzion.game.mmoconnector.persistence.TargetSystem;
 
@@ -32,6 +32,6 @@ public class TargetSystemCall {
     Set<NodeTypeTargetSystemCall> nodeTypeTargetSystemCalls;
 
     @OneToMany(mappedBy = "targetSystemCall")
-    List<Molotow> calls;
+    List<Molotov> molotovs;
 
 }
