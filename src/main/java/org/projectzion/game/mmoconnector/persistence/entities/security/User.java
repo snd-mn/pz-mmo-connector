@@ -35,7 +35,7 @@ public class User {
     private boolean isUsing2FA;
 
     @OneToMany(mappedBy = "user")
-    private Set<Character> character;
+    private Set<Character> characters;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))

@@ -27,9 +27,6 @@ public class Call {
     String bean;
 
     @OneToMany(mappedBy = "call")
-    List<CallParameter> callParameters;
-
-    @OneToMany(mappedBy = "call")
     Set<NodeTypeCall> nodeTypeCalls;
 
     @OneToMany(mappedBy = "call")

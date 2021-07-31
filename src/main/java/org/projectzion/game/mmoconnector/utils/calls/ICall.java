@@ -5,5 +5,5 @@ import org.projectzion.game.mmoconnector.persistence.entities.rpc.UserCall;
 
 
 public interface ICall {
-    CallState executeCall(UserCall userCall);
+    CallState executeCall(UserCall userCall) throws Exception;
 }

@@ -23,4 +23,6 @@ public class Character implements Serializable {
     @ManyToOne
     @JoinColumn(name="target_system_id")
     TargetSystem targetSystem;
+
+    boolean isUsedForItemTransfer;
 }

@@ -3,6 +3,7 @@ package org.projectzion.game.mmoconnector.persistence.entities.rpc;
 import lombok.Getter;
 import lombok.Setter;
 import org.projectzion.game.mmoconnector.persistence.entities.security.User;
+import org.projectzion.game.mmoconnector.utils.calls.ICall;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -25,8 +26,7 @@ public class UserCall {
     @JoinColumn(name="call_id")
     Call call;
 
-    @OneToMany(mappedBy = "userCall")
-    List<CallParameter> callParametersOverrides;
+    String serializedBean;
 
     CallState state;
 

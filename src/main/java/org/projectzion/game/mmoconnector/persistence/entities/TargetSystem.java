@@ -22,6 +22,8 @@ public class TargetSystem {
 
     String ip;
 
+    String port;
+
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     User user;
