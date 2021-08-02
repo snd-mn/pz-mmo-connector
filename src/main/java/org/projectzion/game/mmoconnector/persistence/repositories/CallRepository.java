@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CallRepository extends CrudRepository<Call, Long> {
 
-    @Query("SELECT c FROM Call c WHERE c.targetSystem = :targetSystem AND c.callIdentifier = :callIdentifier")
-    Call getCallByCallIdentifierAndTargetSystem(@Param("callIdentifier") Long callIdentifier, @Param("targetSystem") Long targetSystem);
+    @Query("SELECT c FROM Call c WHERE c.targetSystem.id = :targetSystemId AND c.callIdentifier = :callIdentifier")
+    Call getCallByCallIdentifierAndTargetSystem(@Param("callIdentifier") Long callIdentifier, @Param("targetSystemId") Long targetSystemId);
 
 
 }

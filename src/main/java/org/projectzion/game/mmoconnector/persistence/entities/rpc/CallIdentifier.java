@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum CallIdentifier {
-    SEND_ITEMS(0L);
+    SEND_ITEMS(0L),
+    PICK(1L);
 
     public final Long value;
 

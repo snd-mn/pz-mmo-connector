@@ -26,14 +26,17 @@ public class TargetSystem {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    User user;
+    User connectionUser;
 
     String token;
     //TODO API KEY
 
     @OneToMany(mappedBy = "targetSystem")
-    Set<Character> character;
+    Set<Character> characters;
 
     @OneToMany(mappedBy = "targetSystem")
     Set<Call> calls;
+
+    @OneToMany(mappedBy = "targetSystem")
+    Set<Item> items;
 }

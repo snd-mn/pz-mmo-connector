@@ -12,8 +12,11 @@ import org.projectzion.game.mmoconnector.services.TargetSystemService;
 import org.projectzion.game.mmoconnector.services.UserService;
 import org.projectzion.game.mmoconnector.tos.itemtransfer.SendItemsToTargetSystemRequest;
 import org.projectzion.game.mmoconnector.tos.itemtransfer.SendItemsToTargetSystemResponse;
+import org.projectzion.game.mmoconnector.tos.pick.PickRequest;
+import org.projectzion.game.mmoconnector.tos.pick.PickResponse;
 import org.projectzion.game.mmoconnector.utils.calls.ICall;
 import org.projectzion.game.mmoconnector.utils.calls.JsonUtils;
+import org.projectzion.game.mmoconnector.utils.calls.pick.Pick;
 import org.projectzion.game.mmoconnector.utils.calls.sendItems.SendItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -80,30 +83,27 @@ public class TrinityCoreController {
         return ret;
     }
 
-//    @PostMapping("SendItems2Trinity")
-//    public SendItemsToTargetSystemResponse setItems (@RequestBody SendItemsToTargetSystemRequest request){
-//        SendItemsToTargetSystemResponse ret = new SendItemsToTargetSystemResponse();
-//
-//        StringBuffer commandStr = new StringBuffer();
-//        commandStr.append(".send items ");
-//        commandStr.append("TODO_TODO_TODO");
-//        commandStr.append(request.getMailSubject());
-//        commandStr.append(request.getMailText());
-//        request.getItemAmountList().forEach((itemAmount) -> {
-//            commandStr.append(itemAmount.getItem());
-//            commandStr.append("[:");
-//            commandStr.append(itemAmount.getAmount());
-//            commandStr.append("] ");
-//        });
-//
-//        String body = getCommandPreset(commandStr.toString());
-//        HttpEntity entity = new HttpEntity<>(body, getHttpHeaders());
-//
-//        ResponseEntity<String> response = getRestTemplate().exchange("http://127.0.0.1:7878", HttpMethod.POST, entity, String.class);
-//
-//        ret.setTcsResponse(response.getBody());
-//
-//        return ret;
-//    }
+    @PostMapping("pick")
+    public ResponseEntity<PickResponse> pick (@RequestBody PickRequest request) throws IOException {
+        PickResponse retBody = new PickResponse();
+
+        User user = userService.getUserById(request.getUserId());
+        Call call = callService.getCallByCallIdentifierAndTargetSystem(CallIdentifier.PICK.value, request.getTargetSystem());
+
+        Pick pick = (Pick) applicationContext.getBean(call.getBean());
+        pick.setNodeType(request.getNodeType());
+
+        UserCall userCall = new UserCall();
+        userCall.setUser(user);
+        userCall.setState(CallState.READY);
+
+        ObjectMapper objectMapper = JsonUtils.getObjectMapper();
+        String json = objectMapper.writeValueAsString(pick);
+        userCall.setSerializedBean(json);
+
+        userCallRepository.save(userCall);
+
+        return new ResponseEntity<PickResponse>(retBody, HttpStatus.OK);
+    }
 
 }

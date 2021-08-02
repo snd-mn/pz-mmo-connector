@@ -5,18 +5,19 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name="node_types")
-public class NodeType {
+@Table(name="item")
+public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "nodeType")
-    List<NodeTypeItem> nodeTypeItems;
+    @ManyToOne
+    TargetSystem targetSystem;
 
+    @OneToMany(mappedBy = "item")
+    List<NodeTypeItem> nodeTypeItems;
 }

@@ -2,12 +2,10 @@ package org.projectzion.game.mmoconnector.persistence.entities.rpc;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.projectzion.game.mmoconnector.persistence.entities.NodeTypeCall;
 import org.projectzion.game.mmoconnector.persistence.entities.TargetSystem;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -25,9 +23,6 @@ public class Call {
     CallIdentifier callIdentifier;
 
     String bean;
-
-    @OneToMany(mappedBy = "call")
-    Set<NodeTypeCall> nodeTypeCalls;
 
     @OneToMany(mappedBy = "call")
     List<UserCall> userCalls;

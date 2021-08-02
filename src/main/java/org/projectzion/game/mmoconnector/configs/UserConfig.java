@@ -1,9 +1,9 @@
 package org.projectzion.game.mmoconnector.configs;
 
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@Configuration
 @Data
 public class UserConfig {
     String email;

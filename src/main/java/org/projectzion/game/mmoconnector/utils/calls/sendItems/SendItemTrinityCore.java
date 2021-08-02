@@ -34,7 +34,7 @@ public class SendItemTrinityCore extends SendItem implements Serializable {
     }
 
     protected RestTemplate getRestTemplate(TargetSystem targetSystem){
-        RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication(targetSystem.getUser().getEmail(),targetSystem.getUser().getPassword()).build();
+        RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication(targetSystem.getConnectionUser().getEmail(),targetSystem.getConnectionUser().getPassword()).build();
         restTemplate.getMessageConverters().clear();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
         return restTemplate;

@@ -44,7 +44,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<UserCall> userCalls;
 
-
     public User() {
         super();
         this.enabled = false;
