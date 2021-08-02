@@ -20,6 +20,8 @@ public class Character implements Serializable {
     @JoinColumn(name="user_id")
     User user;
 
+    String name;
+
     @ManyToOne
     @JoinColumn(name="target_system_id")
     TargetSystem targetSystem;

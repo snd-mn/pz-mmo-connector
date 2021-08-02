@@ -1,6 +1,7 @@
 package org.projectzion.game.mmoconnector.utils.setup;
 
 import lombok.SneakyThrows;
+import org.projectzion.game.mmoconnector.configs.NodeTypeAmountConfig;
 import org.projectzion.game.mmoconnector.configs.SetupDevelopmentEnvironmentConfig;
 import org.projectzion.game.mmoconnector.persistence.entities.Item;
 import org.projectzion.game.mmoconnector.persistence.entities.NodeType;
@@ -69,7 +70,7 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if(isSetupDone()){
-            logger.info("SetupDevelopmentEnvironment allready done");
+            logger.info("SetupDevelopmentEnvironment already done");
             return;
         }
 
@@ -85,11 +86,13 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         targetSystemRepository.save(localTrinityCore);
 
         config.getNodeTypeAmountConfigList().forEach(nodeTypeConfig -> {
-            TargetSystem currentTargetSystem = targetSystemRepository.findById(nodeTypeConfig.getTargetSystemItemId()).get();
+            TargetSystem currentTargetSystem = targetSystemRepository.findById(localTrinityCore.getId()).get();
 
             NodeType nodeType = new NodeType();
             nodeType.setId(nodeTypeConfig.getNodeTypeId());
             nodetypeRepository.save(nodeType);
+
+            NodeType type = nodetypeRepository.findById(nodeType.getId()).get();
 
             Item item = new Item();
             item.setTargetSystemItemId(currentTargetSystem.getId());
@@ -109,6 +112,13 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         sendItemsCall.setTargetSystem(localTrinityCore);
         callRepository.save(sendItemsCall);
         saveSetupIsDone();
+
+
+        //jo ich forsche an nem heilmittelt gegen mmo-sucht... lasse mir das von euch bezahlen... weil ihr wegseht
+        //ihr seht es in euren firmen
+        //euren familien
+        //degradiert diese menschen und fangt an sie zu hassen
+        //dabei hasst ihr euch selbst und tretet nach denen die grade nicht stehen können
 
 
     }

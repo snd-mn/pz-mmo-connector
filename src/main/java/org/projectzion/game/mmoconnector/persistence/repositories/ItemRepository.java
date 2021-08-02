@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 public interface ItemRepository extends CrudRepository<Item, Long> {
 
     @Query("SELECT i FROM Item i " +
-            "join NodeTypeItem  nti on nti.item = i and nti.targetSystem.id = :targetSystemId " +
-            "WHERE i.id = :itemId "
+            "JOIN NodeTypeItem  nti on nti.item = i " +
+            "WHERE i.id = :itemId And i.targetSystem.id = :targetSystemId"
     )
     Item getItemForNodeTypeTargetsystem(@Param("itemId") Long itemId, @Param("targetSystemId") Long targetSystemId);
 

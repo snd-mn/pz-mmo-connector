@@ -16,6 +16,7 @@ public class Item {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "target_system_id")
     TargetSystem targetSystem;
 
     Long targetSystemItemId;

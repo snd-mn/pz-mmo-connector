@@ -13,7 +13,7 @@ import java.util.Set;
 @Table(name="node_types")
 public class NodeType {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @OneToMany(mappedBy = "nodeType")
