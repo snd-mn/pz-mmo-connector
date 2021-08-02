@@ -76,19 +76,13 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         User localTrinityCoreConnectionUser = new User();
         localTrinityCoreConnectionUser.setEmail(config.getTrinitycoreConnectorUser().getEmail());
         localTrinityCoreConnectionUser.setPassword(config.getTrinitycoreConnectorUser().getPassword());
-
         userRepository.save(localTrinityCoreConnectionUser);
 
         TargetSystem localTrinityCore = new TargetSystem();
         localTrinityCore.setIp(config.getTrinityCoreTargetSystemConfig().getIp());
         localTrinityCore.setPort(config.getTrinityCoreTargetSystemConfig().getPort());
         localTrinityCore.setConnectionUser(localTrinityCoreConnectionUser);
-
         targetSystemRepository.save(localTrinityCore);
-
-        Call sendItemsCall = new Call();
-        sendItemsCall.setCallIdentifier(CallIdentifier.SEND_ITEMS);
-        sendItemsCall.setBean(SendItemTrinityCore.class.toString());
 
         config.getNodeTypeAmountConfigList().forEach(nodeTypeConfig -> {
             TargetSystem currentTargetSystem = targetSystemRepository.findById(nodeTypeConfig.getTargetSystemItemId()).get();
@@ -109,11 +103,11 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
             nodeTypeItemRepository.save(nodeTypeItem);
         });
 
-
-        // sendItemsCall.setNodeTypeCalls();
+        Call sendItemsCall = new Call();
+        sendItemsCall.setCallIdentifier(CallIdentifier.SEND_ITEMS);
+        sendItemsCall.setBean(SendItemTrinityCore.class.toString());
         sendItemsCall.setTargetSystem(localTrinityCore);
-
+        callRepository.save(sendItemsCall);
         saveSetupIsDone();
-
     }
 }
