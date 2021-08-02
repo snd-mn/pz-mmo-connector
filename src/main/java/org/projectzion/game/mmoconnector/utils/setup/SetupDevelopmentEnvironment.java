@@ -109,5 +109,6 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         sendItemsCall.setTargetSystem(localTrinityCore);
         callRepository.save(sendItemsCall);
         saveSetupIsDone();
+
     }
 }
