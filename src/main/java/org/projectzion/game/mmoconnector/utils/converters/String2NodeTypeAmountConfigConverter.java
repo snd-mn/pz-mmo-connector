@@ -20,17 +20,16 @@ public class String2NodeTypeAmountConfigConverter implements Converter<String, L
         NodeTypeAmountConfig config = new NodeTypeAmountConfig();
 
         for(int i = 0; i < splits.length; i++){
-            if(i % 3 == 3){
+            if(i % 4 == 0){
                 config.setNodeTypeId(Long.valueOf(splits[i]));
             }
-            if(i % 3 == 2){
+            if(i % 4 == 1){
                 config.setTargetSystemItemId(Long.valueOf(splits[i]));
-
             }
-            if(i % 3 == 1){
+            if(i % 4 == 2){
                 config.setAmount(Float.valueOf(splits[i]));
             }
-            if(i % 3 == 0){
+            if(i % 4 == 3){
                 config.setTargetSystemId(Long.valueOf(splits[i]));
                 configs.add(config);
                 config = new NodeTypeAmountConfig();
