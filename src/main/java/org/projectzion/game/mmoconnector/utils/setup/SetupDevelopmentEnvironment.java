@@ -2,6 +2,9 @@ package org.projectzion.game.mmoconnector.utils.setup;
 
 import lombok.SneakyThrows;
 import org.projectzion.game.mmoconnector.configs.SetupDevelopmentEnvironmentConfig;
+import org.projectzion.game.mmoconnector.persistence.entities.Item;
+import org.projectzion.game.mmoconnector.persistence.entities.NodeType;
+import org.projectzion.game.mmoconnector.persistence.entities.NodeTypeItem;
 import org.projectzion.game.mmoconnector.persistence.entities.TargetSystem;
 import org.projectzion.game.mmoconnector.persistence.entities.rpc.Call;
 import org.projectzion.game.mmoconnector.persistence.entities.rpc.CallIdentifier;
@@ -37,6 +40,15 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
 
     @Autowired
     KeyValueService keyValueService;
+
+    @Autowired
+    ItemRepository itemRepository;
+
+    @Autowired
+    NodeTypeRepository nodetypeRepository;
+
+    @Autowired
+    NodeTypeItemRepository nodeTypeItemRepository;
 
     @Autowired
     SetupDevelopmentEnvironmentConfig config;
@@ -77,7 +89,26 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         Call sendItemsCall = new Call();
         sendItemsCall.setCallIdentifier(CallIdentifier.SEND_ITEMS);
         sendItemsCall.setBean(SendItemTrinityCore.class.toString());
-        //todo nodetypes
+
+        config.getNodeTypeAmountConfigList().forEach(nodeTypeConfig -> {
+            TargetSystem currentTargetSystem = targetSystemRepository.findById(nodeTypeConfig.getTargetSystemItemId()).get();
+
+            NodeType nodeType = new NodeType();
+            nodeType.setId(nodeTypeConfig.getNodeTypeId());
+            nodetypeRepository.save(nodeType);
+
+            Item item = new Item();
+            item.setTargetSystemItemId(currentTargetSystem.getId());
+            item.setTargetSystemItemId(nodeTypeConfig.getTargetSystemItemId());
+            itemRepository.save(item);
+
+            NodeTypeItem nodeTypeItem = new NodeTypeItem();
+            nodeTypeItem.setNodeType(nodeType);
+            nodeTypeItem.setItem(item);
+            nodeTypeItem.setAmount(nodeTypeConfig.getAmount());
+            nodeTypeItemRepository.save(nodeTypeItem);
+        });
+
 
         // sendItemsCall.setNodeTypeCalls();
         sendItemsCall.setTargetSystem(localTrinityCore);

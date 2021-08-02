@@ -23,8 +23,4 @@ public class NodeTypeItem {
     Item item;
 
     Float amount;
-
-    @ManyToOne
-    @JoinColumn(name = "target_system_id")
-    TargetSystem targetSystem;
 }

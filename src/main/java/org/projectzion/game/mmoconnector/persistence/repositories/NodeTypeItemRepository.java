@@ -13,8 +13,8 @@ import java.util.List;
 public interface NodeTypeItemRepository extends CrudRepository<NodeTypeItem, Long> {
 
     @Query("SELECT nti FROM NodeTypeItem nti " +
-            "WHERE nti.targetSystem.id = :targetSystemId " +
-            "AND nti.nodeType.id = :nodeTypeId")
+            "JOIN Item i ON i.targetSystem.id = :targetSystemId and i.id = nti.item.id " +
+            "WHERE nti.nodeType.id = :nodeTypeId ")
     List<NodeTypeItem> getNodeTypeItemsByTargetSystemAndNodeType(@Param("nodeTypeId") Long nodeTypeId, @Param("targetSystemId") Long targetSystemId);
 
 
