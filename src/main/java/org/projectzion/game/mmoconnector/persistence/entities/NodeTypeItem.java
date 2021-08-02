@@ -22,7 +22,7 @@ public class NodeTypeItem {
     @JoinColumn(name="item_id")
     Item item;
 
-    float amount;
+    Float amount;
 
     @ManyToOne
     @JoinColumn(name = "target_system_id")

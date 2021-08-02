@@ -54,6 +54,10 @@ public class SendItemTrinityCore extends SendItem implements Serializable {
         return rausMitDerScheisse.replaceAll(placeHolder, command);
     }
 
+    private String getUrl(TargetSystem targetSystem) {
+        return "http://" + targetSystem.getIp() + ":" + targetSystem.getPort();
+    }
+
     @Bean(name = "SendItemsTrinityCore")
     public static SendItemTrinityCore getSendItemTrinityCore(){
         return new SendItemTrinityCore();
@@ -94,7 +98,5 @@ public class SendItemTrinityCore extends SendItem implements Serializable {
         return CallState.DONE;
     }
 
-    private String getUrl(TargetSystem targetSystem) {
-        return "http://" + targetSystem.getIp() + ":" + targetSystem.getPort();
-    }
+
 }

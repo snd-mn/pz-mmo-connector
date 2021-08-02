@@ -18,6 +18,8 @@ public class Item {
     @ManyToOne
     TargetSystem targetSystem;
 
+    Long targetSystemItemId;
+
     @OneToMany(mappedBy = "item")
     List<NodeTypeItem> nodeTypeItems;
 }
