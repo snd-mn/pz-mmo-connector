@@ -1,13 +1,16 @@
 package org.projectzion.game.mmoconnector.persistence.entities.rpc;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public enum CallState {
-    READY(0),
-    IN_PROGRESS(1),
-    DONE(2),
-    Failed(3);
+    FAILED(0),
+    READY(1),
+    IN_PROGRESS(2),
+    DONE(3)
+    ;
 
     private final int value;
 
@@ -20,4 +23,6 @@ public enum CallState {
                 .filter(type -> type.value == value)
                 .findFirst();
     }
+
+    public static List<CallState> STATES_TODO = List.of(new CallState[]{READY, FAILED});
 }

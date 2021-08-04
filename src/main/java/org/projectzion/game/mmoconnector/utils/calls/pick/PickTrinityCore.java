@@ -100,7 +100,7 @@ public class PickTrinityCore extends Pick implements Serializable {
             }
         }catch(Exception e){
             logger.error(e.getMessage(), e);
-            return CallState.Failed;
+            return CallState.FAILED;
         }
 
         return CallState.DONE;

@@ -92,8 +92,6 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
             nodeType.setId(nodeTypeConfig.getNodeTypeId());
             nodetypeRepository.save(nodeType);
 
-            NodeType type = nodetypeRepository.findById(nodeType.getId()).get();
-
             Item item = new Item();
             item.setTargetSystemItemId(currentTargetSystem.getId());
             item.setTargetSystemItemId(nodeTypeConfig.getTargetSystemItemId());

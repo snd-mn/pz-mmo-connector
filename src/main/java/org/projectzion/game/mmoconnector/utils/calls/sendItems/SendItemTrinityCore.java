@@ -92,7 +92,7 @@ public class SendItemTrinityCore extends SendItem implements Serializable {
         }catch(Exception e){
             //TODO logging
             System.out.println(e.getMessage());
-            return CallState.Failed;
+            return CallState.FAILED;
         }
 
         return CallState.DONE;
