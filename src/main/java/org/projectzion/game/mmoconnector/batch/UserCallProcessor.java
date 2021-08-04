@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 
 public class UserCallProcessor implements ItemProcessor<UserCall, UserCall> {
@@ -29,23 +30,18 @@ public class UserCallProcessor implements ItemProcessor<UserCall, UserCall> {
         userCall.setState(CallState.IN_PROGRESS);
         userCallRepository.save(userCall);
 
-
-        String clazz = userCall.getCall().getBean();
         String serializedBean = userCall.getSerializedBean();
-
         Class<? extends ICall> callClass = (Class<ICall>) Class.forName(userCall.getCall().getBean());
-        ICall iCall = applicationContext.getBean(callClass); //but this is naked...
 
         ObjectMapper objectMapper = JsonUtils.getObjectMapper();
         ICall call = objectMapper.readValue(serializedBean,callClass); //.. na ob das klappt :D
 
+        //somehow this needs to be done, otherwise the autowired members are null
+        AutowireCapableBeanFactory factory = applicationContext.getAutowireCapableBeanFactory();
+        factory.autowireBean(call);
+
         CallState state = call.executeCall(userCall);
         userCall.setState(state);
-        userCallRepository.save(userCall);
-
-        if(state == CallState.FAILED){
-            //möööp
-        }
 
         return userCall;
     }

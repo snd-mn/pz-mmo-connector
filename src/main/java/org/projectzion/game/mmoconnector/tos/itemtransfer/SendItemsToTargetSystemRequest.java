@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class SendItemsToTargetSystemRequest extends BaseInTo {
+    String charName;
     String mailSubject;
     String mailText;
     List<ItemAmount> itemAmountList;

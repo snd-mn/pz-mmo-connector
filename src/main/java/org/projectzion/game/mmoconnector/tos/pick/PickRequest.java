@@ -5,5 +5,5 @@ import org.projectzion.game.mmoconnector.tos.BaseInTo;
 
 @Data
 public class PickRequest extends BaseInTo {
-    Long NodeType;
+    Long nodeType;
 }

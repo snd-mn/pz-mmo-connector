@@ -12,14 +12,12 @@ import java.util.List;
 @Table(name="item")
 public class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "target_system_id")
     TargetSystem targetSystem;
-
-    Long targetSystemItemId;
 
     @OneToMany(mappedBy = "item")
     List<NodeTypeItem> nodeTypeItems;

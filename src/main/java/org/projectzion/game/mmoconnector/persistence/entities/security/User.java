@@ -30,6 +30,9 @@ public class User {
     @Column(length = 60)
     private String password;
 
+    @Column(length = 60)
+    private String remotePassword;
+
     private boolean enabled;
 
     private boolean isUsing2FA;

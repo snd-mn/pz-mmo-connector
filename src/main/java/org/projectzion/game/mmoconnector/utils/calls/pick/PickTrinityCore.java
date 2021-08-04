@@ -48,7 +48,7 @@ public class PickTrinityCore extends Pick implements Serializable {
     }
 
     protected RestTemplate getRestTemplate(TargetSystem targetSystem){
-        RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication(targetSystem.getConnectionUser().getEmail(),targetSystem.getConnectionUser().getPassword()).build();
+        RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication(targetSystem.getConnectionUser().getEmail(),targetSystem.getConnectionUser().getRemotePassword()).build();
         restTemplate.getMessageConverters().clear();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
         return restTemplate;
@@ -57,14 +57,16 @@ public class PickTrinityCore extends Pick implements Serializable {
     protected String getCommandPreset(String command){
         String placeHolder = "%COMMAND%";
         String rausMitDerScheisse =
-                "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
-                        "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"urn:TC\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\n" +
-                        "    <SOAP-ENV:Body>\n" +
-                        "        <ns1:executeCommand>\n" +
-                        "            %COMMAND%\n" +
-                        "        </ns1:executeCommand>\n" +
-                        "    </SOAP-ENV:Body>\n" +
-                        "</SOAP-ENV:Envelope>";
+                "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" +
+                "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"urn:TC\" xmlns:xsd=\"http://www.w3.org/1999/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\r\n" +
+                "<SOAP-ENV:Body>\r\n" +
+                "<ns1:executeCommand>\r\n" +
+                "<command>" +
+                "%COMMAND%" +
+                "</command>\r\n" +
+                "</ns1:executeCommand>\r\n" +
+                "</SOAP-ENV:Body>\r\n" +
+                "</SOAP-ENV:Envelope>";
         return rausMitDerScheisse.replaceAll(placeHolder, command);
     }
 
@@ -77,13 +79,13 @@ public class PickTrinityCore extends Pick implements Serializable {
         TargetSystem targetSystem = userCall.getCall().getTargetSystem();
         StringBuffer commandStr = new StringBuffer();
         commandStr.append(".send items ");
-        commandStr.append(characterService.getCharacterForItemTransfer(userCall.getUser()));
-        commandStr.append("send mapped item amounts");
-        commandStr.append("thank you!");
+        commandStr.append(characterService.getCharacterForItemTransfer(userCall.getUser()).getName() + " ");
+        commandStr.append("\"send mapped item amounts\" ");
+        commandStr.append("\"thank you!\" ");
 
         List<NodeTypeItem> ntis = nodeTypeItemRepository.getNodeTypeItemsByTargetSystemAndNodeType(nodeType,userCall.getCall().getTargetSystem().getId());
         ntis.forEach(nti -> {
-            commandStr.append(nti.getItem().getTargetSystemItemId());
+            commandStr.append(nti.getItem().getId());
             commandStr.append("[:");
             commandStr.append(nti.getAmount().intValue());
             commandStr.append("] ");

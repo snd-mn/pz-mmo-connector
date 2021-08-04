@@ -1,9 +1,11 @@
 package org.projectzion.game.mmoconnector.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.projectzion.game.mmoconnector.persistence.entities.rpc.*;
 import org.projectzion.game.mmoconnector.persistence.entities.security.User;
 import org.projectzion.game.mmoconnector.persistence.repositories.UserCallRepository;
+import org.projectzion.game.mmoconnector.scoped.request.RequestScoped;
 import org.projectzion.game.mmoconnector.services.CallService;
 import org.projectzion.game.mmoconnector.services.TargetSystemService;
 import org.projectzion.game.mmoconnector.services.UserService;
@@ -24,6 +26,7 @@ import java.io.IOException;
 
 @RestController
 public class CallController {
+
     @Autowired
     ApplicationContext applicationContext;
 
@@ -39,12 +42,15 @@ public class CallController {
     @Autowired
     UserCallRepository userCallRepository;
 
+    @Autowired
+    RequestScoped requestScoped;
+
     @PostMapping("SendItems")
     public ResponseEntity<String> sendItems (@RequestBody SendItemsToTargetSystemRequest request) throws IOException {
         ResponseEntity<String> ret;
 
-        User user = userService.getUserById(request.getUserId());
-        Call call = callService.getCallByCallIdentifierAndTargetSystem(CallIdentifier.SEND_ITEMS.value, request.getTargetSystem());
+        User user = requestScoped.currentUserPrincipal().getUser();
+        Call call = callService.getCallByCallIdentifierAndTargetSystem(CallIdentifier.SEND_ITEMS, request.getTargetSystem());
 
         SendItem sendItem = (SendItem) applicationContext.getBean(call.getBean());
         sendItem.setMailSubject(request.getMailSubject());
@@ -65,26 +71,28 @@ public class CallController {
         return ret;
     }
 
+    @SneakyThrows
     @PostMapping("pick")
     public ResponseEntity<PickResponse> pick (@RequestBody PickRequest request) throws IOException {
         PickResponse retBody = new PickResponse();
 
-        User user = userService.getUserById(request.getUserId());
-        Call call = callService.getCallByCallIdentifierAndTargetSystem(CallIdentifier.PICK.value, request.getTargetSystem());
-
-        Pick pick = (Pick) applicationContext.getBean(call.getBean());
-        pick.setNodeType(request.getNodeType());
+        User user = requestScoped.currentUserPrincipal().getUser();
+        Call call = callService.getCallByCallIdentifierAndTargetSystem(CallIdentifier.PICK, request.getTargetSystem());
 
         UserCall userCall = new UserCall();
         userCall.setUser(user);
+        userCall.setCall(call);
         userCall.setState(CallState.READY);
+
+        Pick pick = (Pick) applicationContext.getBean(Class.forName(call.getBean()));
+        pick.setNodeType(request.getNodeType());
 
         ObjectMapper objectMapper = JsonUtils.getObjectMapper();
         String json = objectMapper.writeValueAsString(pick);
         userCall.setSerializedBean(json);
-
         userCallRepository.save(userCall);
 
+        retBody.setInfo("pick will be executed soon");
         return new ResponseEntity<PickResponse>(retBody, HttpStatus.OK);
     }
 
