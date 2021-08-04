@@ -151,6 +151,7 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         userRepository.save(localTrinityCoreConnectionUser);
 
         TargetSystem localTrinityCore = new TargetSystem();
+        localTrinityCore.setId(config.getTrinityCoreTargetSystemConfig().getId());
         localTrinityCore.setIp(config.getTrinityCoreTargetSystemConfig().getIp());
         localTrinityCore.setPort(config.getTrinityCoreTargetSystemConfig().getPort());
         localTrinityCore.setConnectionUser(localTrinityCoreConnectionUser);

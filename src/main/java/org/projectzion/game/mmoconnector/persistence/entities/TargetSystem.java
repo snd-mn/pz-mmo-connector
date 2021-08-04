@@ -15,7 +15,6 @@ import org.projectzion.game.mmoconnector.persistence.entities.security.User;
 @Table(name="target_systems")
 public class TargetSystem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     String name;

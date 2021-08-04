@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class TargetSystemConfig {
+    Long id;
     String ip;
     String port;
 }

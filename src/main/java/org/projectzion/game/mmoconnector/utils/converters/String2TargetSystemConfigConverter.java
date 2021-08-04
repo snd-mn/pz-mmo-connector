@@ -14,8 +14,9 @@ public class String2TargetSystemConfigConverter implements Converter<String, Tar
     public TargetSystemConfig convert(String s) {
         TargetSystemConfig config = new TargetSystemConfig();
         String[] splits = s.split(",");
-        config.setIp(splits[0]);
-        config.setPort(splits[1]);
+        config.setId(Long.valueOf(splits[0]));
+        config.setIp(splits[1]);
+        config.setPort(splits[2]);
 
         return config;
     }
