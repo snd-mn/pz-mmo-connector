@@ -30,6 +30,10 @@ public class User {
     @Column(length = 60)
     private String password;
 
+    //TODO REMOVE ON OAUTH2
+    @Column(length = 60)
+    private String passwordClear;
+
     @Column(length = 60)
     private String remotePassword;
 

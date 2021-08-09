@@ -142,7 +142,9 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         // connection user
         User localTrinityCoreConnectionUser = new User();
         localTrinityCoreConnectionUser.setEmail(config.getTrinitycoreConnectorUser().getEmail());
+        //TODO REMOVE ON OAUTH2
         localTrinityCoreConnectionUser.setPassword(passwordEncoder().encode(config.getTrinitycoreConnectorUser().getPassword()));
+        localTrinityCoreConnectionUser.setPasswordClear(config.getTrinitycoreConnectorUser().getPassword());
         localTrinityCoreConnectionUser.setRemotePassword(config.getTrinitycoreConnectorUser().getPassword());
 
         Role role = roleRepository.findByName(ROLE_SUPER_USER);
@@ -161,6 +163,7 @@ public class SetupDevelopmentEnvironment implements ApplicationListener<ContextR
         // player
         User trinitycorePlayerUser = new User();
         trinitycorePlayerUser.setEmail(config.getTrinitycorePlayerUser().getEmail());
+        trinitycorePlayerUser.setPasswordClear(config.getTrinitycorePlayerUser().getPassword());
         trinitycorePlayerUser.setPassword(passwordEncoder().encode(config.getTrinitycorePlayerUser().getPassword()));
         Role rolePlayer = roleRepository.findByName(ROLE_USER);
         List<Role> rolesPlayer = List.of(new Role[]{rolePlayer});

@@ -33,6 +33,7 @@ public class UserCallReader implements ItemReader<UserCall> {
         }catch(Exception e){
             log.info("no more items");
             call = null; // mööp
+            userCalliterator = null; // XD
         }
 
         return call;
